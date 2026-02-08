@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Calendar</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: rgb(108, 248, 143);
+        }
+        h1{
+            text-align: center;
+        }
+        h3{
+            text-align: center;
+        }
+        #event-dashboard{
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+        #main-event, #event-list{
+            background-color: rgb(101, 152, 239);
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+        }
+        #event-list{
+            width: 1000px;
+            height: 500px;
+        }
+        #main-event{
+            width: 400px;
+            height: 500px;
+        }
+        #event-card{
+            width: 150px;
+            height: 290px;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background-color: #93ebf7;
+        }
+        #eventlist{
+            width: 900px;
+            height: 350px;
+            display: flex;
+            flex-direction: row;
+            overflow-y: auto;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: #e0f7fa;
+            position: relative;
+        }
+        h4{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        input, select, textarea, button{
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+        button{
+            background-color: #207dee;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            &:hover{
+                background-color: #105bb5;
+            }
+            &:active{
+                transform: scale(0.9);
+            }
+        }
+        textarea{
+            resize: vertical;
+            height: 100px;
+            max-height: 120px;
+        }
+        #typed{
+            width: 100%;
+            height: 200px;
+            display: flex;
+        }
+        #type-key{
+            width: 93%;
+            height: 60px;
+            border: 2px solid #000;
+            border-radius: 10px;
+            background-color: rgb(101, 152, 239);
+            padding: 10px;
+            margin-left: 40px;
+        }
+        #delete-btn, #mark-btn{
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Smart Event Dashboard</h1>
+    <div id="event-dashboard">
+        <div id="main-event">
+            <h3>Add New Event</h3>
+            <form>
+                <label for="event-name">Event Title:</label><br>
+                <input type="text" id="event-name" name="event-name" required><br><br>
+                <label for="event-date">Event Date:</label><br>
+                <input type="date" id="event-date" name="event-date" required><br><br>
+                <label for="category">Category:</label><br>
+                <select id="category" name="category" required>
+                    <option value="conference">Conference</option>
+                    <option value="workshop">Workshop</option>
+                    <option value="Webinar">Webinar</option>
+                    <option value="meetup">Meetup</option>
+                    <option value="social">Social</option>
+                </select><br><br>
+                <label for="description">Description:</label><br>
+                <textarea id="description" name="description"></textarea><br><br>
+                <button id="addevent" type="submit">Add Event</button>
+            </form>
+        </div>
+        <div id="event-list">
+            <h3>Upcoming Events</h3>
+            <div id="eventlist">
+                <h4>No events added yet.</h4>
+            </div>
+            <div>
+                <button id="clear-events">Clear Events</button>
+                <button id="add-events-btn">Add Sample Events</button>
+            </div>
+            
+        </div>
+        <script>
+            let form = document.querySelector('form');
+            let eventtitle = document.querySelector('#event-name');
+            let eventdate = document.querySelector('#event-date');
+            let category = document.querySelector('#category');
+            let description = document.querySelector('#description');
+            let eventlist = document.querySelector('#event-list');
+            let clearevents = document.querySelector('#clear-events');
+            let addeventsbtn = document.querySelector('#add-events-btn');
+            let deletebtn = document.querySelectorAll('#delete-btn');
+            function addevent(e){
+                e.preventDefault();
+                let card = document.createElement('div');
+                card.id = 'event-card';
+                card.innerHTML = `<h4>${eventtitle.value}</h4>
+                                  <span>Date: ${eventdate.value}</span><br>
+                                  <span>Category: ${category.value}</span><br>
+                                  <p>Description: ${description.value}</p>
+                                  <button id="delete-btn" onclick="deleteEvent(event)">Remove</button>
+                                  <button id='mark-btn' onclick="markCompleted(event)">Mark as Completed</button>
+                                  </div>`;
+                
+                document.querySelector('#eventlist').appendChild(card);
+                form.reset();
+                eventlist.querySelector('h4').style.display = 'none';
+            }
+            function clear(){
+                let cards = document.querySelectorAll('#event-card');
+                cards.forEach(card => card.remove());
+                eventlist.querySelector('h4').style.display = 'block';
+            }
+            function sample(){
+                let card=document.createElement('div');
+                card.id='event-card';
+                card.innerHTML = `<h5>Sample Event</h5>
+                                <span>Date: 2024-12-31</span><br>
+                                <span>Category: Conference</span><br>
+                                <p>Description: This is a sample event for demonstration purposes.</p>
+                                <button id="delete-btn" onclick="deleteEvent(event)">Remove</button>
+                                <button id='mark-btn' onclick="markCompleted(event)">Mark as Completed</button>
+                                </div>`;
+                document.querySelector('#eventlist').appendChild(card);
+                eventlist.querySelector('h4').style.display = 'none';
+            };
+            function deleteEvent(e){
+                e.target.parentElement.remove();
+                let cards = document.querySelectorAll('#event-card');
+                if(cards.length === 0){
+                    eventlist.querySelector('h4').style.display = 'block';
+                }
+            }
+            function markCompleted(e){
+                e.target.parentElement.style.backgroundColor = '#d4edda';
+            }
+            function keyPressHandler(e){
+                let typeKeyDiv = document.querySelector('#type-key');
+                typeKeyDiv.innerHTML = `<p style="font-size: 18px;">You Pressed : ${e.key}</p>`;
+            }
+            document.addEventListener('keydown',keyPressHandler);
+            form.addEventListener("submit",addevent);
+            clearevents.addEventListener("click",clear);
+            addeventsbtn.addEventListener("click",sample);
+
+        </script>
+    </div>
+    <div id="typed">
+        <div id="type-key">
+            <p style="font-size: 18px;">You Pressed : </p>
+        </div>
+    </div>
+</body>
+</html>
