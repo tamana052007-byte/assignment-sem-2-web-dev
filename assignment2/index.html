@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Async Weather Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Weather App using Async JavaScript -->
+    
+    <div class="container">
+        <h2>☁️ Async Weather Tracker App</h2>
+        <div class="row">
+            <div class="searchBox">
+                <h3>Search City</h3>
+
+                <input type="text" id="cityInput" placeholder="Ex: Delhi, London">
+                <button onclick="getWeather()">Search</button>
+
+                <h4>Search History</h4>
+                <div id="history"></div>
+            </div>
+
+
+            <div class="weatherBox">
+
+                <h3>Weather Info</h3>
+                <div id="weatherResult">Enter a city to see weather</div>
+            </div>
+        </div>
+        <div class="consoleBox">
+            <h3>Console – Event Loop</h3>
+            <pre id="log"></pre>
+        </div>
+    </div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
