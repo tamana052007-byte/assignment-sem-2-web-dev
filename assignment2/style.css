@@ -1,0 +1,56 @@
+/* Main styling for Weather App */
+body{
+    font-family: Arial;
+    background: linear-gradient(135deg,#1f2a5a,#0a1633);
+    color:white;
+    text-align:center;
+}
+
+.container{
+    width:800px;
+    margin:auto;
+}
+
+.row{
+    display:flex;
+    justify-content:space-between;
+    margin-top:20px;
+}
+
+.searchBox,.weatherBox{
+    background:white;
+    color:black;
+    padding:20px;
+    width:45%;
+    border-radius:10px;
+    text-align:left;
+}
+
+input{
+    padding:8px;
+    width:65%;
+}
+
+button{
+    padding:8px 12px;
+    background:orange;
+    border:none;
+    cursor:pointer;
+}
+
+.consoleBox{
+    background:#0b1b3b;
+    padding:20px;
+    margin-top:20px;
+    border-radius:10px;
+    text-align:left;
+}
+
+#history button{
+    margin:4px;
+    padding:5px 10px;
+    background:orange;
+    border:none;
+    cursor:pointer;
+    color:white;
+}
